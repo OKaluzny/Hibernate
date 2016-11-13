@@ -1,6 +1,7 @@
 package org.it.discovery.training.hibernate.model;
 
 import javax.persistence.*;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -18,6 +19,7 @@ public class Publisher {
 	private List<Book> books;
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public int getId() {
 		return id;
 	}
@@ -26,7 +28,7 @@ public class Publisher {
 		this.id = id;
 	}
 
-	@Column(name = "PUBLISHER_NAME", nullable = false, unique = true)
+	@Column(name = "PUBLISHER_NAME")
 	public String getName() {
 		return name;
 	}
@@ -35,7 +37,8 @@ public class Publisher {
 		this.name = name;
 	}
 
-	@Transient
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true,
+	mappedBy = "publisher")
 	public List<Book> getBooks() {
 		return books;
 	}

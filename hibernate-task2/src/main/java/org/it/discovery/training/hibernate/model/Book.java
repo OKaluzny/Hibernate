@@ -1,10 +1,14 @@
 package org.it.discovery.training.hibernate.model;
 
+import javax.persistence.*;
+
 /**
  * Book in a library
  * @author morenets
  *
  */
+@Entity
+@Table(name = "BOOKS")
 public class Book {
 	private int id;
 	
@@ -24,6 +28,8 @@ public class Book {
 	 */
 	private int pages;
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	public int getId() {
 		return id;
 	}
@@ -39,7 +45,7 @@ public class Book {
 	public void setName(String name) {
 		this.name = name;
 	}
-
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	public Person getAuthor() {
 		return author;
 	}
@@ -47,7 +53,7 @@ public class Book {
 	public void setAuthor(Person author) {
 		this.author = author;
 	}
-
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	public Publisher getPublisher() {
 		return publisher;
 	}
@@ -64,6 +70,7 @@ public class Book {
 		this.year = year;
 	}
 
+	@Column(columnDefinition="bigint")
 	public int getPages() {
 		return pages;
 	}

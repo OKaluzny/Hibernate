@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/hibernate.iml" filepath="$PROJECT_DIR$/hibernate.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hibernate-task1/hibernate-task1.iml" filepath="$PROJECT_DIR$/hibernate-task1/hibernate-task1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hibernate-task2/hibernate-task2.iml" filepath="$PROJECT_DIR$/hibernate-task2/hibernate-task2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hibernate-task4/hibernate-task4.iml" filepath="$PROJECT_DIR$/hibernate-task4/hibernate-task4.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hibernate-task7/hibernate-task7.iml" filepath="$PROJECT_DIR$/hibernate-task7/hibernate-task7.iml" />
+    </modules>
+  </component>
+</project>

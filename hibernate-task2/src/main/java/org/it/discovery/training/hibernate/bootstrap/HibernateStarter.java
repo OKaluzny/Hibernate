@@ -17,15 +17,14 @@ public class HibernateStarter {
         try (SessionFactory factory = HibernateUtil.getSessionFactory()) {
             HibernatePublisherRepository repository = new HibernatePublisherRepository();
             Publisher publisher = new Publisher();
-            Publisher publisher2 = new Publisher();
             publisher.setName("Test");
-            publisher2.setName("Test2");
-            List<Book> books = Arrays.asList(new Book(), new Book());
-            publisher.setBooks(books);
-            publisher2.setBooks(books);
+            Book book1 = new Book();
+            Book book2 = new Book();
+            publisher.addBook(book1);
+            publisher.addBook(book2);
             repository.save(publisher);
-            repository.save(publisher2);
-            repository.findById(1);
+            Publisher publisher1 = repository.findById(1);
+            System.out.println(publisher1.getBookCount());
             repository.delete(1);
 
         }

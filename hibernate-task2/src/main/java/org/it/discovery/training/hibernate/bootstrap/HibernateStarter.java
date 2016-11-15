@@ -4,9 +4,11 @@ import java.util.List;
 
 import org.hibernate.SessionFactory;
 import org.it.discovery.training.hibernate.model.Book;
+import org.it.discovery.training.hibernate.model.Person;
 import org.it.discovery.training.hibernate.model.Publisher;
 import org.it.discovery.training.hibernate.repository.HQLBookRepository;
 import org.it.discovery.training.hibernate.repository.HibernateBookRepository;
+import org.it.discovery.training.hibernate.repository.HibernatePersonRepository;
 import org.it.discovery.training.hibernate.repository.HibernatePublisherRepository;
 import org.it.discovery.training.hibernate.util.HibernateUtil;
 
@@ -17,6 +19,8 @@ public class HibernateStarter {
 			HibernatePublisherRepository repository = new HibernatePublisherRepository();
 			HibernateBookRepository bookRepository = new HibernateBookRepository();
 			HQLBookRepository hqlBookRepository = new HQLBookRepository();
+			HibernatePersonRepository personRepository = new HibernatePersonRepository();
+
 			Publisher publisher = new Publisher();
 			publisher.setName("Test");
 
@@ -34,6 +38,22 @@ public class HibernateStarter {
 			publisher.addBook(book3);
 			repository.save(publisher);
 
+			Person person1 = new Person();
+			person1.setName("First");
+			person1.addBook(book1);
+			person1.addBook(book2);
+			personRepository.save(person1);
+
+			Person person2 = new Person();
+			person2.setName("Second");
+			person2.addBook(book3);
+			personRepository.save(person2);
+			Person person3 = new Person();
+			person3.setName("Third");
+			personRepository.save(person3);
+
+
+
 
 			Publisher publisher1 = repository.findById(1);
 			System.out.println(publisher1.getBookCount());
@@ -48,7 +68,7 @@ public class HibernateStarter {
 			System.out.println(testHQLBookList);
 
             List<Book> testFindLikeBook = bookRepository.findLikeName("Test%");
-            testFindLikeBook.forEach(i -> System.out.println(i.getName()));
+            testFindLikeBook.forEach(System.out::println);
 
             List<Book> testFindWithMorePagesBook = bookRepository.findWithMorePages(19);
             testFindWithMorePagesBook.forEach(i -> System.out.println(i.getName() + " " + i.getPages()));
@@ -65,6 +85,21 @@ public class HibernateStarter {
 
 			List<Book> testFindSortedBooks = bookRepository.findSortedBooks();
 			testFindSortedBooks.forEach(i -> System.out.println(i.getName() + " " + i.getPages()));
+
+
+			//findAll persons
+			personRepository.findAll().forEach(i -> System.out.println(i.getName() + " " + i.getBookCount()));
+
+			//find persons without book
+			List<Person> persons = personRepository.findPersonWithoutBooks();
+			System.out.println(persons);
+			persons.forEach(i -> System.out.println(i.getName() + " " + i.getBookCount()));
+
+
+			//find persons with book
+			List<Person> personsWithBooks = personRepository.findPersonWithBooks(1);
+			System.out.println(persons);
+			personsWithBooks.forEach(i -> System.out.println(i.getName() + " " + i.getBookCount()));
 
 		}
 

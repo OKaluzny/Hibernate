@@ -21,7 +21,7 @@ import org.hibernate.annotations.Formula;
 public class Person extends BaseEntity {
 	private int bookCount;
 
-	@Formula("(select count(books.id) FROM BOOKS books " + "where books.publisher_id = id)")
+	@Formula("(select count(books.id) FROM BOOKS books " + "where books.author_id = id)")
 	public int getBookCount() {
 		return bookCount;
 	}

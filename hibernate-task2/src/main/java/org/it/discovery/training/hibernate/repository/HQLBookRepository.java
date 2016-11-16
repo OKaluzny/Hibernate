@@ -26,37 +26,101 @@ public class HQLBookRepository implements BookRepository {
 			e.printStackTrace();
 		}
 		return books;
-
 	}
 
 	@Override
 	public List<Book> findWithName(String name) {
-
-		return null;
+        List<Book> books = null;
+        try {
+            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            session.beginTransaction();
+            Query query = session.createQuery("from Book where name=:name");
+            query.setParameter("name", name);
+            books = query.getResultList();
+            session.getTransaction().commit();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        }
+        return books;
 	}
 
 	@Override
 	public List<Book> findLikeName(String text) {
-		return null;
+        List<Book> books = null;
+        try {
+            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            session.beginTransaction();
+            Query query = session.createQuery("from Book where name like :name");
+            query.setParameter("name", text);
+            books = query.getResultList();
+            session.getTransaction().commit();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        }
+        return books;
 	}
 
 	@Override
 	public List<Book> findWithMorePages(int pages) {
-		return null;
+        List<Book> books = null;
+        try {
+            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            session.beginTransaction();
+            Query query = session.createQuery("from Book where pages > :pages");
+            query.setParameter("pages", pages);
+            books = query.getResultList();
+            session.getTransaction().commit();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        }
+        return books;
 	}
 
 	@Override
 	public List<Book> searchBooks(String name, int pages) {
-		return null;
+        List<Book> books = null;
+        try {
+            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            session.beginTransaction();
+            Query query = session.createQuery("from Book where name =:name and pages=:pages");
+            query.setParameter("pages", pages);
+            query.setParameter("name", name);
+            books = query.getResultList();
+            session.getTransaction().commit();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        }
+        return books;
 	}
 
 	@Override
 	public int findTotalPages() {
-		return 0;
+        long result = 0;
+        try {
+            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            session.beginTransaction();
+            Query query = session.createQuery("select sum(pages) from Book");
+            Object obj = query.getSingleResult();
+            result = (long) obj;
+            session.getTransaction().commit();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        }
+        return (int) result;
 	}
 
 	@Override
 	public List<Book> findSortedBooks() {
-		return null;
+        List<Book> books = null;
+        try {
+            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            session.beginTransaction();
+            Query query = session.createQuery("from Book order by name");
+            books = query.getResultList();
+            session.getTransaction().commit();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        }
+        return books;
 	}
 }

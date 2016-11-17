@@ -5,6 +5,7 @@ import org.it.discovery.training.hibernate.model.Book;
 import org.it.discovery.training.hibernate.model.Person;
 import org.it.discovery.training.hibernate.model.Publisher;
 import org.it.discovery.training.hibernate.repository.HQLBookRepository;
+import org.it.discovery.training.hibernate.repository.HQLPersonRepository;
 import org.it.discovery.training.hibernate.repository.HibernatePersonRepository;
 import org.it.discovery.training.hibernate.repository.HibernatePublisherRepository;
 import org.it.discovery.training.hibernate.util.HibernateUtil;
@@ -20,6 +21,7 @@ public class HibernateHQLStarter {
             HQLBookRepository hqlBookRepository = new HQLBookRepository();
             HibernatePublisherRepository publisherRepository = new HibernatePublisherRepository();
             HibernatePersonRepository personRepository = new HibernatePersonRepository();
+            HQLPersonRepository hqlPersonRepository = new HQLPersonRepository();
 
             Publisher publisher = new Publisher();
             publisher.setName("Test publisher");
@@ -42,6 +44,7 @@ public class HibernateHQLStarter {
             Person person2 = new Person();
             person2.setName("Second");
             person2.addBook(book3);
+            person2.addBook(book2);
             personRepository.save(person2);
             Person person3 = new Person();
             person3.setName("Third");
@@ -69,6 +72,13 @@ public class HibernateHQLStarter {
             List<Book> books5 = hqlBookRepository.findSortedBooks();
             books5.forEach(i -> System.out.println(i.getName() + i.getPages()));
 
+            personRepository.findAll().forEach(i -> System.out.println(i.getName() + " " + i.getBookCount()));
+
+            List<Person> persons = hqlPersonRepository.findPersonWithoutBooks();
+            persons.forEach(i -> System.out.println(i.getName() + " " + i.getBookCount()));
+
+            List<Person> persons2 = hqlPersonRepository.findPersonWithBooks(2);
+            persons2.forEach(i -> System.out.println(i.getName() + " " + i.getBookCount()));
 
         }
     }

@@ -1,15 +1,13 @@
 package org.it.discovery.training.hibernate.common;
 
 import javax.interceptor.InterceptorBinding;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.lang.annotation.*;
 
 /**
  * Created by Шарипов on 21.11.2016.
  */
 
+@Inherited
 @InterceptorBinding
 @Target({ElementType.TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)

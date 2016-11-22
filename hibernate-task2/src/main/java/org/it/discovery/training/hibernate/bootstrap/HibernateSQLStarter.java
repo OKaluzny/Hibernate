@@ -1,7 +1,6 @@
 package org.it.discovery.training.hibernate.bootstrap;
 
 import org.hibernate.SessionFactory;
-
 import org.it.discovery.training.hibernate.common.AuditableLogger;
 import org.it.discovery.training.hibernate.model.Book;
 import org.it.discovery.training.hibernate.model.Person;
@@ -11,34 +10,28 @@ import org.it.discovery.training.hibernate.util.HibernateUtil;
 import org.jboss.weld.environment.se.Weld;
 import org.jboss.weld.environment.se.WeldContainer;
 
-
-import javax.enterprise.context.ApplicationScoped;
 import java.util.List;
 
 /**
- * Created by Шарипов on 16.11.2016.
+ * Created by Шарипов on 22.11.2016.
  */
-public class HibernateHQLStarter {
+public class HibernateSQLStarter {
     public static void main(String[] args) {
         try (SessionFactory sessionFactory = HibernateUtil.getSessionFactory()) {
             Weld weld = new Weld().disableDiscovery()
                     .packages(HQLPersonRepository.class, AuditableLogger.class)
                     .interceptors(AuditableLogger.class);
             WeldContainer container = weld.initialize();
+            HibernateSQLBookRepository sqlBookRepository = container.instance().select(HibernateSQLBookRepository.class).get();
+            HibernateSQLPersonRepository sqlPersonRepository = container.instance().select(HibernateSQLPersonRepository.class).get();
+
             HQLPersonRepository hqlPersonRepository = container.instance().select(HQLPersonRepository.class).get();
             HQLBookRepository hqlBookRepository = container.instance().select(HQLBookRepository.class).get();
             HibernatePersonRepository personRepository = container.instance().select(HibernatePersonRepository.class).get();
             HibernatePublisherRepository publisherRepository = container.instance().select(HibernatePublisherRepository.class).get();
 
-
-            //HQLBookRepository hqlBookRepository = new HQLBookRepository();
-            //HibernatePublisherRepository publisherRepository = new HibernatePublisherRepository();
-            //HibernatePersonRepository personRepository = new HibernatePersonRepository();
-            //HQLPersonRepository hqlPersonRepository = new HQLPersonRepository();
-
             Publisher publisher = new Publisher();
             publisher.setName("Test publisher");
-
 
             Book book1 = new Book();
             book1.setName("Test name third");
@@ -63,25 +56,25 @@ public class HibernateHQLStarter {
             person3.setName("Third");
             personRepository.save(person3);
 
-            List<Book> books = hqlBookRepository.findAll();
+            List<Book> books = sqlBookRepository.findAll();
             books.forEach(i -> System.out.println(i.getName() + i.getPages()));
 
-            List<Book> books1 = hqlBookRepository.findWithName("Before test name");
+            List<Book> books1 = sqlBookRepository.findWithName("Before test name");
             books1.forEach(i -> System.out.println(i.getName() + i.getPages()));
 
-            List<Book> books2 = hqlBookRepository.findLikeName("B%");
+            List<Book> books2 = sqlBookRepository.findLikeName("T%");
             books2.forEach(i -> System.out.println(i.getName() + i.getPages()));
 
-            List<Book> books3 = hqlBookRepository.findWithMorePages(25);
+            List<Book> books3 = sqlBookRepository.findWithMorePages(25);
             books3.forEach(i -> System.out.println(i.getName() + i.getPages()));
 
-            List<Book> books4 = hqlBookRepository.searchBooks("Before test name", 199);
+            List<Book> books4 = sqlBookRepository.searchBooks("Before test name", 99);
             books4.forEach(i -> System.out.println(i.getName() + i.getPages()));
 
-            System.out.println(hqlBookRepository.findTotalPages());
+            //System.out.println(sqlBookRepository.findTotalPages());
 
 
-            books.forEach(i -> System.out.println(i.getName() + i.getPages()));
+            /*books.forEach(i -> System.out.println(i.getName() + i.getPages()));
             List<Book> books5 = hqlBookRepository.findSortedBooks();
             books5.forEach(i -> System.out.println(i.getName() + i.getPages()));
 
@@ -92,7 +85,7 @@ public class HibernateHQLStarter {
 
             List<Person> persons2 = hqlPersonRepository.findPersonWithBooks(2);
             persons2.forEach(i -> System.out.println(i.getName() + " " + i.getBookCount()));
-            System.out.println("PPS!");
+            System.out.println("PPS!");*/
 
         }
     }

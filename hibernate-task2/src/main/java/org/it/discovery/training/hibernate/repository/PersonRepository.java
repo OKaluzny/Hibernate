@@ -2,6 +2,7 @@ package org.it.discovery.training.hibernate.repository;
 
 import java.util.List;
 
+import org.it.discovery.training.hibernate.bootstrap.Guarded;
 import org.it.discovery.training.hibernate.model.Person;
 
 public interface PersonRepository {
@@ -11,6 +12,7 @@ public interface PersonRepository {
 	 * 
 	 * @return
 	 */
+
 	List<Person> findPersonWithoutBooks();
 
 	/**
@@ -19,6 +21,7 @@ public interface PersonRepository {
 	 * @param number
 	 * @return
 	 */
+
 	List<Person> findPersonWithBooks(int number);
 
 }

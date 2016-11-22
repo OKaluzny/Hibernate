@@ -2,17 +2,24 @@ package org.it.discovery.training.hibernate.common;
 
 import com.google.common.base.Stopwatch;
 
+
+import javax.annotation.Priority;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
+import java.lang.annotation.Inherited;
 import java.util.logging.Logger;
+
+
+
 
 /**
  * Created by Шарипов on 21.11.2016.
  */
 
-@Interceptor
+
 @Auditable
+@Interceptor
 public class AuditableLogger {
     private static final Logger LOGGER = Logger.getLogger(AuditableLogger.class.getName());
 
@@ -24,6 +31,6 @@ public class AuditableLogger {
         } finally {
             LOGGER.info(() -> String.format("%s::%s completed in %s.", context.getTarget().getClass().getSimpleName(),
                     context.getMethod().getName(), stopwatch));
-        }
+            }
     }
 }

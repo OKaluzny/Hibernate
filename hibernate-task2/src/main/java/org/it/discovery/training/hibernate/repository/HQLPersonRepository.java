@@ -1,21 +1,30 @@
 package org.it.discovery.training.hibernate.repository;
 
-import com.jcabi.aspects.Loggable;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.it.discovery.training.hibernate.bootstrap.Guarded;
+import org.it.discovery.training.hibernate.common.Auditable;
 import org.it.discovery.training.hibernate.model.Person;
 import org.it.discovery.training.hibernate.util.HibernateUtil;
 
+import javax.ejb.Stateless;
+import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.Dependent;
+import javax.inject.Singleton;
 import javax.persistence.Query;
 import java.util.List;
 
 /**
  * Created by Шарипов on 16.11.2016.
  */
+
+
 public class HQLPersonRepository implements PersonRepository {
 
+
     @Override
-    @Loggable
+    @Auditable
     public List<Person> findPersonWithoutBooks() {
         List<Person> persons = null;
         try {
@@ -32,8 +41,9 @@ public class HQLPersonRepository implements PersonRepository {
 
     }
 
-    @Loggable
+
     @Override
+    @Auditable
     public List<Person> findPersonWithBooks(int number) {
         List<Person> persons = null;
         try {

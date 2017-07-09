@@ -1,9 +1,5 @@
 package org.it.discovery.training.hibernate.util;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
-
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
@@ -13,41 +9,45 @@ import org.it.discovery.training.hibernate.model.Book;
 import org.it.discovery.training.hibernate.model.Person;
 import org.it.discovery.training.hibernate.model.Publisher;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
 public class HibernateUtil {
-	private static final SessionFactory sessionFactory = buildSessionFactory();
 
-	public static SessionFactory getSessionFactory() {
-		return sessionFactory;
-	}
+    private static final SessionFactory sessionFactory = buildSessionFactory();
 
-	private static SessionFactory buildSessionFactory() {
-		try {
-			ServiceRegistry registry = new StandardServiceRegistryBuilder().applySettings(loadProperties()).build();
+    public static SessionFactory getSessionFactory() {
+        return sessionFactory;
+    }
 
-			MetadataSources sources = new MetadataSources(registry);
+    private static SessionFactory buildSessionFactory() {
+        try {
+            ServiceRegistry registry = new StandardServiceRegistryBuilder().applySettings(loadProperties()).build();
 
-			sources.addAnnotatedClass(Publisher.class);
-			sources.addAnnotatedClass(Book.class);
-			sources.addAnnotatedClass(Person.class);
+            MetadataSources sources = new MetadataSources(registry);
 
-			return sources.buildMetadata().buildSessionFactory();
-		} catch (HibernateException ex) {
-			System.err.println("SessionFactory creation failed." + ex);
-			throw new ExceptionInInitializerError(ex);
-		}
-	}
+            sources.addAnnotatedClass(Publisher.class);
+            sources.addAnnotatedClass(Book.class);
+            sources.addAnnotatedClass(Person.class);
 
-	private static Properties loadProperties() {
-		try {
+            return sources.buildMetadata().buildSessionFactory();
+        } catch (HibernateException ex) {
+            System.err.println("SessionFactory creation failed." + ex);
+            throw new ExceptionInInitializerError(ex);
+        }
+    }
 
-			InputStream in = HibernateUtil.class.getClassLoader().getResourceAsStream("application.properties");
-			Properties properties = new Properties();
-			properties.load(in);
+    private static Properties loadProperties() {
+        try {
 
-			return properties;
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
-	}
+            InputStream in = HibernateUtil.class.getClassLoader().getResourceAsStream("application.properties");
+            Properties properties = new Properties();
+            properties.load(in);
 
+            return properties;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

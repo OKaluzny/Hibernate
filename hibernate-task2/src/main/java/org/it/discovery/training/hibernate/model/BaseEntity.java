@@ -1,12 +1,11 @@
 package org.it.discovery.training.hibernate.model;
 
-import java.time.LocalDateTime;
-import java.util.Date;
-
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * Created by Шарипов on 13.11.2016.
@@ -14,33 +13,34 @@ import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
 abstract class BaseEntity {
-	private int id;
-	private Date created;
-	private LocalDateTime modified;
 
-	public Date getCreated() {
-		return created;
-	}
+    private int id;
+    private Date created;
+    private LocalDateTime modified;
 
-	public void setCreated(Date created) {
-		this.created = created;
-	}
+    public Date getCreated() {
+        return created;
+    }
 
-	public LocalDateTime getModified() {
-		return modified;
-	}
+    public void setCreated(Date created) {
+        this.created = created;
+    }
 
-	public void setModified(LocalDateTime modified) {
-		this.modified = modified;
-	}
+    public LocalDateTime getModified() {
+        return modified;
+    }
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	public int getId() {
-		return id;
-	}
+    public void setModified(LocalDateTime modified) {
+        this.modified = modified;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }
